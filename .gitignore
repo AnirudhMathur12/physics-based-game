@@ -57,4 +57,4 @@ dkms.conf
 .cache
 
 #Makefiles
-Makefile
+Makefile/**

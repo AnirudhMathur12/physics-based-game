@@ -55,3 +55,6 @@ dkms.conf
 .DS_Store
 *.json
 .cache
+
+#Makefiles
+Makefile

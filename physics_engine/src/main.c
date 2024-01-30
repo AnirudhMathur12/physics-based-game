@@ -45,7 +45,7 @@ int main()
     win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
     rend = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 
-    background = IMG_LoadTexture(rend, "background.png");
+    background = IMG_LoadTexture(rend, "background-grayishwhite.png");
 
     SDL_Event e;
     while(running)
@@ -92,11 +92,8 @@ void UPDATE()
 {
     SDL_RenderClear(rend);
     SDL_RenderCopy(rend, background, NULL, NULL);
-    SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
-    DrawCircle(rend, ball->current_pos.x, ball->current_pos.y, pos.w);
-    SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
-    DrawCircle(rend, 640, 360, 300);
-    SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+    filledCircleRGBA(rend, 640, 360, 300, 0, 0, 0, 255);
+    filledCircleRGBA(rend, ball->current_pos.x, ball->current_pos.y, 50, 255, 255, 255, 255);
     SDL_RenderPresent(rend);
     update(solver, objs, 1, 1/60.0f);
 }

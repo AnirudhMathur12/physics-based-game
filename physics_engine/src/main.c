@@ -34,7 +34,7 @@ PhysicsObject* ball;
 int main()
 {
     INIT();
-    ball = createPhysicsObject(100, 100);
+    ball = createPhysicsObject(800, 450);
     objs[0] = ball;
     solver = malloc(sizeof(Solver));
     solver->gravity = (vec2){0.0f, 4000.0f};
@@ -91,8 +91,7 @@ void UPDATE()
     DrawCircle(rend, ball->current_pos.x, ball->current_pos.y, pos.w);
     SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
     SDL_RenderPresent(rend);
-    applyGravity(solver, objs, 1);
-    UpdatePositions(solver, objs, 1, 1/60.0f);
+    update(solver, objs, 1, 1/60.0f);
 }
 
 

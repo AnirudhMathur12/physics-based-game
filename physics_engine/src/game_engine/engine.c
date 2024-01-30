@@ -1,5 +1,12 @@
 #include "engine.h"
+#include <math.h>
 #include <stdlib.h>
+
+//Vector
+float lenght(vec2* vec)
+{
+    return sqrt((vec->x)*(vec->x) + (vec->y)*(vec->y));
+}
 
 //PhysicsObject
 void accelerate(PhysicsObject* obj, vec2 acc)
@@ -31,8 +38,8 @@ PhysicsObject* createPhysicsObject(int x, int y)
 void update(Solver* solver, PhysicsObject** objs, const int size, float dt)
 {
     applyGravity(solver, objs, size);
-    UpdatePositions(solver, objs, size, dt);
-    
+    ApplyConstraint(solver, objs, size);
+    UpdatePositions(solver, objs, size, dt); 
 }
 
 void applyGravity(Solver* solver, PhysicsObject** objs, const int size)
@@ -48,5 +55,22 @@ void UpdatePositions(Solver* solver, PhysicsObject** objs, const int size, float
     for(int i = 0; i < size; i++)
     {
         UpdatePostion(objs[i], dt);
+    }
+}
+
+void ApplyConstraint(Solver* solver, PhysicsObject** objs, int size)
+{
+    const vec2 position = (vec2){800, 450};
+    const float radius = 200.0f;
+    for(int i = 0; i < size; i++)
+    {
+        const vec2 to_obj = {objs[i]->current_pos.x - position.x, objs[i]->current_pos.y - position.y};
+        const float dist = lenght((vec2*)&to_obj);
+        if(dist > radius-50.0f)
+        {
+            const vec2 n = {to_obj.x/dist, to_obj.y/dist};
+            objs[i]->current_pos.x = position.x + n.x*(dist-50.0f);
+            objs[i]->current_pos.y = position.y + n.y*(dist-50.0f);
+        }
     }
 }

@@ -32,5 +32,6 @@ void update(Solver* solver, PhysicsObject** objs, const int size, float dt);
 void applyGravity(Solver* solver, PhysicsObject** objs, const int size);
 void UpdatePositions(Solver* solver, PhysicsObject** objs, const int size, float dt);
 void ApplyConstraint(Solver* solver, PhysicsObject** objs, int size);
+void solveCollisions(Solver* solver, PhysicsObject** objs, int size);
 
 #endif

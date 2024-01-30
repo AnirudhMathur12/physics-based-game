@@ -39,6 +39,7 @@ void update(Solver* solver, PhysicsObject** objs, const int size, float dt)
 {
     applyGravity(solver, objs, size);
     ApplyConstraint(solver, objs, size);
+    solveCollisions(solver, objs, size);
     UpdatePositions(solver, objs, size, dt); 
 }
 
@@ -71,6 +72,29 @@ void ApplyConstraint(Solver* solver, PhysicsObject** objs, int size)
             const vec2 n = {to_obj.x/dist, to_obj.y/dist};
             objs[i]->current_pos.x = position.x + n.x*(radius-50.0f);
             objs[i]->current_pos.y = position.y + n.y*(radius-50.0f);
+        }
+    }
+}
+
+void solveCollisions(Solver* solver, PhysicsObject** objs, int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        PhysicsObject* obj_1 = objs[i];
+        for(int k = i+1; k < size; k++)
+        {
+            PhysicsObject* obj_2 = objs[k];
+            const vec2 collision_axis = {obj_1->current_pos.x - obj_2->current_pos.x, obj_1->current_pos.y - obj_2->current_pos.y};
+            const float dist = mod((vec2*)&collision_axis);
+            if(dist < 100.0f)
+            {
+                const vec2 n = {collision_axis.x/dist, collision_axis.y/dist};
+                const float delta = 100.0f - dist;
+                obj_1->current_pos.x += (0.5f) * delta * n.x;
+                obj_1->current_pos.y += (0.5f) * delta * n.y;
+                obj_2->current_pos.x -= (0.5f) * delta * n.x;
+                obj_2->current_pos.y -= (0.5f) * delta * n.y;
+            }
         }
     }
 }

@@ -13,7 +13,7 @@
 #include "window/window.h"
 #include "game_engine/engine.h"
 
-#define OBJLIMIT 100
+#define OBJLIMIT 300
 
 void INIT();
 void UPDATE();
@@ -77,6 +77,11 @@ int main()
             }
         }
         UPDATE();
+        int spawnticks = SDL_GetTicks();
+        if(SDL_GetTicks()-spawnticks >= 0.5f)
+        {
+            spawnball(objs, count, &count);
+        }
         int frameticks = SDL_GetTicks() - startTick;
         if(frameticks < ticksperframe)
         {
@@ -110,14 +115,14 @@ void UPDATE()
     renderObjects(rend, objs, count);
     //filledCircleRGBA(rend, ball->current_pos.x, ball->current_pos.y, 50, 255, 255, 255, 255);
     SDL_RenderPresent(rend);
-    update(solver, objs, count, 1/120.0f);
+    update(solver, objs, count, 1/60.0f);
 }
 
 void renderObjects(SDL_Renderer* rend, PhysicsObject** objs, int size)
 {
     for(int i = 0; i < size; i++)
     {
-        filledCircleRGBA(rend, objs[i]->current_pos.x, objs[i]->current_pos.y, 50, 255, 255, 255, 255);
+        filledCircleRGBA(rend, objs[i]->current_pos.x, objs[i]->current_pos.y, objs[i]->radius, 255, 255, 255, 255);
     }
 }
 
@@ -127,7 +132,7 @@ void spawnball(PhysicsObject** objs, int size, int* count)
     {
         return;
     }
-    objs[*count] = createPhysicsObject(850, 300);
+    objs[*count] = createPhysicsObject(850, 300, 10);
     (*count)++;
 }
 

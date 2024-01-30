@@ -11,6 +11,7 @@ typedef struct vec2
 typedef struct PhysicsObject 
 {
     vec2 current_pos, prev_pos, acc;
+    float radius;
 
 } PhysicsObject;
 
@@ -23,7 +24,7 @@ typedef struct Solver
 float mod(vec2* vec);
 
 //Physics Object
-PhysicsObject* createPhysicsObject(int x, int y);
+PhysicsObject* createPhysicsObject(int x, int y, float radius);
 void UpdatePostion(PhysicsObject* obj, float dt);
 void accelerate(PhysicsObject* obj, vec2 acc);
 

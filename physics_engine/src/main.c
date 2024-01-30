@@ -1,3 +1,4 @@
+#ifdef __APPLE__
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -12,6 +13,7 @@
 #include "SDL_video.h"
 #include "window/window.h"
 #include "game_engine/engine.h"
+#endif
 
 #define OBJLIMIT 300
 

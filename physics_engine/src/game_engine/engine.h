@@ -20,7 +20,7 @@ typedef struct Solver
 } Solver;
 
 //vec2
-float lenght(vec2* vec);
+float mod(vec2* vec);
 
 //Physics Object
 PhysicsObject* createPhysicsObject(int x, int y);

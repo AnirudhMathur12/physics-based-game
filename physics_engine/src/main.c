@@ -26,6 +26,8 @@ Solver* solver;
 SDL_Rect pos = {100, 100, 50, 50};
 SDL_Color color = {0,0,0,0};
 
+SDL_Texture* background;
+
 void DrawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32_t radius);
 
 PhysicsObject* objs[10];
@@ -34,14 +36,16 @@ PhysicsObject* ball;
 int main()
 {
     INIT();
-    ball = createPhysicsObject(800, 450);
+    ball = createPhysicsObject(850, 300);
     objs[0] = ball;
     solver = malloc(sizeof(Solver));
-    solver->gravity = (vec2){0.0f, 4000.0f};
+    solver->gravity = (vec2){0.0f, 1500.0f};
     
     //win= createWindow("Physics Engine Demo", 1280, 720, 1280, 1280);
-    win = SDL_CreateWindow("Window", 20, 20, 1280, 720, 0);
+    win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
     rend = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
+
+    background = IMG_LoadTexture(rend, "background.png");
 
     SDL_Event e;
     while(running)
@@ -87,8 +91,11 @@ void INIT()
 void UPDATE()
 {
     SDL_RenderClear(rend);
+    SDL_RenderCopy(rend, background, NULL, NULL);
     SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
     DrawCircle(rend, ball->current_pos.x, ball->current_pos.y, pos.w);
+    SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+    DrawCircle(rend, 640, 360, 300);
     SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
     SDL_RenderPresent(rend);
     update(solver, objs, 1, 1/60.0f);

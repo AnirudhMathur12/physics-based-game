@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 //Vector
-float lenght(vec2* vec)
+float mod(vec2* vec)
 {
     return sqrt((vec->x)*(vec->x) + (vec->y)*(vec->y));
 }
@@ -60,17 +60,17 @@ void UpdatePositions(Solver* solver, PhysicsObject** objs, const int size, float
 
 void ApplyConstraint(Solver* solver, PhysicsObject** objs, int size)
 {
-    const vec2 position = (vec2){800, 450};
-    const float radius = 200.0f;
+    const vec2 position = (vec2){640, 360};
+    const float radius = 300.0f;
     for(int i = 0; i < size; i++)
     {
         const vec2 to_obj = {objs[i]->current_pos.x - position.x, objs[i]->current_pos.y - position.y};
-        const float dist = lenght((vec2*)&to_obj);
+        const float dist = mod((vec2*)&to_obj);
         if(dist > radius-50.0f)
         {
             const vec2 n = {to_obj.x/dist, to_obj.y/dist};
-            objs[i]->current_pos.x = position.x + n.x*(dist-50.0f);
-            objs[i]->current_pos.y = position.y + n.y*(dist-50.0f);
+            objs[i]->current_pos.x = position.x + n.x*(radius-50.0f);
+            objs[i]->current_pos.y = position.y + n.y*(radius-50.0f);
         }
     }
 }

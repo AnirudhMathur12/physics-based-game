@@ -1,4 +1,4 @@
-SRC = src/main.c src/window/window.c src/game_engine/engine.c
+SRC = src/main.c src/game_engine/engine.c
 APP = physics_engine.out
 
 build:

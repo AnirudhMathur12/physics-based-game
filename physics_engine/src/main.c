@@ -9,8 +9,19 @@
 #include <SDL.h>
 #include <SDL2_gfxPrimitives.h>
 #include <SDL_image.h>
-#include <stdio.h>
-#include <stdlib.h>
+#endif
+
+#ifdef __linux__
+#include "SDL2/SDL_events.h"
+#include "SDL2/SDL_keycode.h"
+#include "SDL2/SDL_pixels.h"
+#include "SDL2/SDL_render.h"
+#include "SDL2/SDL_timer.h"
+#include "SDL2/SDL_video.h"
+#include "SDL2/game_engine/engine.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL2_gfxPrimitives.h>
+#include <SDL2/SDL_image.h>
 #endif
 
 #define OBJLIMIT 400

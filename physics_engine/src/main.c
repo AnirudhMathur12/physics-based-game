@@ -24,6 +24,9 @@
 #include <SDL2/SDL_image.h>
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #define OBJLIMIT 400
 
 #define PI 3.14159265359

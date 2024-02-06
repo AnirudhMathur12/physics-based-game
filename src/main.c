@@ -36,8 +36,9 @@ void INIT();
 void UPDATE();
 
 int running = 1;
+int autospawn = 0;
 
-int count = 9;
+int count = 1;
 
 float ticksperframe = 1000.0f / 60.0f;
 SDL_Window* win;
@@ -73,16 +74,7 @@ int main()
 
     solver->link = link;
 
-    objs[0] = createPhysicsObject(550, 300, 10, 1);
-    objs[1] = createPhysicsObject(560, 300, 10, 1);
-    objs[2] = createPhysicsObject(570, 300, 10, 1);
-    objs[3] = createPhysicsObject(580, 300, 10, 1);
-    objs[4] = createPhysicsObject(590, 300, 10, 1);
-    objs[5] = createPhysicsObject(600, 300, 10, 1);
-    objs[6] = createPhysicsObject(610, 300, 10, 1);
-    objs[7] = createPhysicsObject(620, 300, 10, 1);
-    objs[8] = createPhysicsObject(630, 300, 10, 1);
-    
+    objs[0] = createPhysicsObject(800, 400, 20, 1);
 
     // win= createWindow("Physics Engine Demo", 1280, 720, 1280, 1280);
     win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
@@ -118,7 +110,7 @@ int main()
         }
         UPDATE();
         
-        if(SDL_GetTicks() - spawnticks>50)
+        if(SDL_GetTicks() - spawnticks>50 && autospawn)
         {
             spawnball(objs, &count);
             spawnticks = SDL_GetTicks();
@@ -183,6 +175,7 @@ void spawnball(PhysicsObject **objs, int *count)
     (*count)++;
 }
 
+/*
 void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius)
 {
     const int32_t diameter = (radius * 2);
@@ -220,3 +213,4 @@ void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_
         }
     }
 }
+*/

@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OBJLIMIT 17
+#define OBJLIMIT 100
 
 #define PI 3.14159265359
 
@@ -65,10 +65,15 @@ int main()
     solver = malloc(sizeof(Solver));
     solver->gravity = (vec2){0.0f, 3000.0f};
 
+    /*
     link = malloc(sizeof(Link));
     link->dist = 21;
+    */
+    link = NULL;
 
-    objs[0] = createPhysicsObject(550, 300, 10, 0);
+    solver->link = link;
+
+    objs[0] = createPhysicsObject(550, 300, 10, 1);
     objs[1] = createPhysicsObject(560, 300, 10, 1);
     objs[2] = createPhysicsObject(570, 300, 10, 1);
     objs[3] = createPhysicsObject(580, 300, 10, 1);
@@ -112,13 +117,13 @@ int main()
             }
         }
         UPDATE();
-        /*
-        if(SDL_GetTicks() - spawnticks>300)
+        
+        if(SDL_GetTicks() - spawnticks>50)
         {
             spawnball(objs, &count);
             spawnticks = SDL_GetTicks();
         }
-        */
+        
         int frameticks = SDL_GetTicks() - startTick;
         if (frameticks < ticksperframe)
         {
@@ -151,9 +156,11 @@ void UPDATE()
     filledCircleRGBA(rend, 640, 360, 300, 0, 0, 0, 255);
     renderObjects(rend, objs, count);
     SDL_RenderPresent(rend);
-    update(solver, link, objs, count, 1 / 60.0f);
+    update(solver, objs, count, 1 / 60.0f);
+    /*
     objs[0]->current_pos.x = 550;
     objs[0]->current_pos.y = 300;
+    */
 }
 
 void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)

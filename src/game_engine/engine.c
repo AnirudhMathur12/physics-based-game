@@ -36,7 +36,7 @@ PhysicsObject *createPhysicsObject(int x, int y, float rad, int freefalling)
 }
 
 // Solver
-void update(Solver *solver, Link* link, PhysicsObject **objs, const int size, float dt)
+void update(Solver *solver, PhysicsObject **objs, const int size, float dt)
 {
     int substeps = 8;
     const float sub_dt = dt / (float)substeps;
@@ -47,9 +47,12 @@ void update(Solver *solver, Link* link, PhysicsObject **objs, const int size, fl
         ApplyConstraint(solver, objs, size);
         solveCollisions(solver, objs, size);
         UpdatePositions(solver, objs, size, sub_dt);
-        for(int i = size-1; i >= 1; i--)
+        if(solver->link != NULL)
         {
-            applyLink(link, objs[i-1], objs[i]);
+            for(int i = size-1; i >= 1; i--)
+            {
+                applyLink(solver->link, objs[i-1], objs[i]);
+            }
         }
     }
 }

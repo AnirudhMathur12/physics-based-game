@@ -20,6 +20,7 @@ typedef struct Link {
 
 typedef struct Solver {
     vec2 gravity;
+    Link* link;
 } Solver;
 
 // vec2
@@ -31,7 +32,7 @@ void UpdatePostion(PhysicsObject *obj, float dt);
 void accelerate(PhysicsObject *obj, vec2 acc);
 
 // Solver
-void update(Solver *solver, Link* link, PhysicsObject **objs, const int size, float dt);
+void update(Solver *solver, PhysicsObject **objs, const int size, float dt);
 void applyGravity(Solver *solver, PhysicsObject **objs, const int size);
 void UpdatePositions(Solver *solver, PhysicsObject **objs, const int size,
                      float dt);

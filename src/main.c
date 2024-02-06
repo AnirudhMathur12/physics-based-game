@@ -149,10 +149,10 @@ void UPDATE()
     renderObjects(rend, objs, count);
     SDL_RenderPresent(rend);
     update(solver, objs, count, 1 / 60.0f);
-    /* 
+     
     objs[0]->current_pos.x = 550;
     objs[0]->current_pos.y = 300;
-    */
+    
 }
 
 void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)

@@ -151,10 +151,6 @@ void UPDATE()
         update(solver, objs, count, 1 / 60.0f);
     objs[0]->current_pos = (vec2){450, 500};
     objs[20]->current_pos = (vec2){450+20*20, 500};
-    /*  
-    objs[0]->current_pos.x = 550;
-    objs[0]->current_pos.y = 300;
-    */
 }
 
 void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)

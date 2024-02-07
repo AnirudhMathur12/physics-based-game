@@ -8,14 +8,14 @@ float mod(vec2 *vec)
     return sqrt((vec->x) * (vec->x) + (vec->y) * (vec->y));
 }
 
-// PhysicsObject
-void accelerate(PhysicsObject *obj, vec2 acc)
+// PhysicsObject_Circle
+void accelerate(PhysicsObject_Circle *obj, vec2 acc)
 {
     obj->acc.x += acc.x;
     obj->acc.y += acc.y;
 }
 
-void UpdatePostion(PhysicsObject *obj, float dt)
+void UpdatePostion(PhysicsObject_Circle *obj, float dt)
 {
     const vec2 velocity = {obj->current_pos.x - obj->prev_pos.x, obj->current_pos.y - obj->prev_pos.y};
     obj->prev_pos = obj->current_pos;
@@ -24,9 +24,9 @@ void UpdatePostion(PhysicsObject *obj, float dt)
     obj->acc = (vec2){0, 0};
 }
 
-PhysicsObject *createPhysicsObject(int x, int y, float rad, int freefalling)
+PhysicsObject_Circle* createPhysicsObject_Circle(int x, int y, float rad, int freefalling)
 {
-    PhysicsObject *temp = malloc(sizeof(PhysicsObject));
+    PhysicsObject_Circle* temp = malloc(sizeof(PhysicsObject_Circle));
     temp->current_pos.x = x;
     temp->current_pos.y = y;
     temp->prev_pos = temp->current_pos;
@@ -36,7 +36,7 @@ PhysicsObject *createPhysicsObject(int x, int y, float rad, int freefalling)
 }
 
 // Solver
-void update(Solver *solver, PhysicsObject **objs, const int size, float dt)
+void update(Solver *solver, PhysicsObject_Circle **objs, const int size, float dt)
 {
     int substeps = 8;
     const float sub_dt = dt / (float)substeps;
@@ -57,7 +57,7 @@ void update(Solver *solver, PhysicsObject **objs, const int size, float dt)
     }
 }
 
-void applyGravity(Solver *solver, PhysicsObject **objs, const int size) {
+void applyGravity(Solver *solver, PhysicsObject_Circle **objs, const int size) {
     for (int i = 0; i < size; i++)
     {
         if(objs[i]->freefalling)
@@ -67,7 +67,7 @@ void applyGravity(Solver *solver, PhysicsObject **objs, const int size) {
     }
 }
 
-void UpdatePositions(Solver *solver, PhysicsObject **objs, const int size, float dt)
+void UpdatePositions(Solver *solver, PhysicsObject_Circle **objs, const int size, float dt)
 {
     for (int i = 0; i < size; i++)
     {
@@ -78,7 +78,7 @@ void UpdatePositions(Solver *solver, PhysicsObject **objs, const int size, float
     }
 }
 
-void ApplyConstraint(Solver *solver, PhysicsObject **objs, int size)
+void ApplyConstraint(Solver *solver, PhysicsObject_Circle **objs, int size)
 {
     const vec2 position = (vec2){640, 360};
     const float radius = 300.0f;
@@ -95,14 +95,14 @@ void ApplyConstraint(Solver *solver, PhysicsObject **objs, int size)
     }
 }
 
-void solveCollisions(Solver *solver, PhysicsObject **objs, int size)
+void solveCollisions(Solver *solver, PhysicsObject_Circle **objs, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        PhysicsObject *obj_1 = objs[i];
+        PhysicsObject_Circle *obj_1 = objs[i];
         for (int k = i + 1; k < size; k++)
         {
-            PhysicsObject *obj_2 = objs[k];
+            PhysicsObject_Circle *obj_2 = objs[k];
             const vec2 collision_axis = {obj_1->current_pos.x - obj_2->current_pos.x, obj_1->current_pos.y - obj_2->current_pos.y};
             const float dist = mod((vec2 *)&collision_axis);
             const float min_dist = obj_1->radius + obj_2->radius;
@@ -120,7 +120,7 @@ void solveCollisions(Solver *solver, PhysicsObject **objs, int size)
 }
 
 // Link
-void applyLink(Link *link, PhysicsObject *obj1, PhysicsObject *obj2)
+void applyLink(Link *link, PhysicsObject_Circle *obj1, PhysicsObject_Circle *obj2)
 {
     link->obj_1 = obj1;
     link->obj_2 = obj2;

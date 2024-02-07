@@ -52,17 +52,17 @@ SDL_Color color = {0, 0, 0, 0};
 SDL_Texture* background;
 
 void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius);
-void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size);
-void spawnball(PhysicsObject **objs, int *count);
+void renderObjects(SDL_Renderer *rend, PhysicsObject_Circle **objs, int size);
+void spawnball(PhysicsObject_Circle **objs, int *count);
 
-PhysicsObject* objs[OBJLIMIT];
+PhysicsObject_Circle* objs[OBJLIMIT];
 
 int main()
 {
     INIT();
-    // objs[0] = createPhysicsObject(850, 300);
-    // objs[1] = createPhysicsObject(400, 300);
-    // objs[2] = createPhysicsObject(650, 300);
+    // objs[0] = createPhysicsObject_Circle(850, 300);
+    // objs[1] = createPhysicsObject_Circle(400, 300);
+    // objs[2] = createPhysicsObject_Circle(650, 300);
     solver = malloc(sizeof(Solver));
     solver->gravity = (vec2){0.0f, 3000.0f};
 
@@ -74,7 +74,7 @@ int main()
 
     solver->link = link;
 
-    objs[0] = createPhysicsObject(800, 400, 20, 1);
+    objs[0] = createPhysicsObject_Circle(800, 400, 20, 1);
 
     // win= createWindow("Physics Engine Demo", 1280, 720, 1280, 1280);
     win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
@@ -155,7 +155,7 @@ void UPDATE()
     */
 }
 
-void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)
+void renderObjects(SDL_Renderer *rend, PhysicsObject_Circle **objs, int size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -164,13 +164,13 @@ void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)
     }
 }
 
-void spawnball(PhysicsObject **objs, int *count)
+void spawnball(PhysicsObject_Circle **objs, int *count)
 {
     if (*count >= OBJLIMIT)
     {
         return;
     }
-    objs[*count] = createPhysicsObject(700, 300, 10, 1);
+    objs[*count] = createPhysicsObject_Circle(700, 300, 10, 1);
     //accelerate(objs[*count], (vec2){500000*cos(*count), 500000*sin(*count)});
     (*count)++;
 }

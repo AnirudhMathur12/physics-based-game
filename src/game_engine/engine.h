@@ -11,12 +11,6 @@ typedef struct PhysicsObject{
     int freefalling;
 } PhysicsObject;
 
-typedef struct PhysicsObject_Rect {
-    vec2 current_pos, prev_pos, acc;
-    float wid, len;
-    int freefalling;
-} PhysicsObject_Rect;
-
 typedef struct Link {
 
     PhysicsObject* obj_1;

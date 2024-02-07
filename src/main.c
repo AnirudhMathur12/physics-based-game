@@ -80,7 +80,7 @@ int main()
     win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
     rend = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
 
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
+    //SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
     background = IMG_LoadTexture(rend, "background-grayishwhite.png");
     int spawnticks = SDL_GetTicks();
@@ -110,7 +110,7 @@ int main()
         }
         UPDATE();
         
-        if(SDL_GetTicks() - spawnticks>50 && autospawn)
+        if(SDL_GetTicks() - spawnticks>25 && autospawn)
         {
             spawnball(objs, &count);
             spawnticks = SDL_GetTicks();

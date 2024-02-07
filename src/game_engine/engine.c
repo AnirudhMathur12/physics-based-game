@@ -24,7 +24,7 @@ void UpdatePostion(PhysicsObject *obj, float dt)
     obj->acc = (vec2){0, 0};
 }
 
-PhysicsObject* createPhysicsObject(int x, int y, float rad, int freefalling)
+PhysicsObject* createPhysicsObject(int x, int y, float rad, int freefalling, int linked)
 {
     PhysicsObject* temp = malloc(sizeof(PhysicsObject));
     temp->current_pos.x = x;
@@ -32,6 +32,7 @@ PhysicsObject* createPhysicsObject(int x, int y, float rad, int freefalling)
     temp->prev_pos = temp->current_pos;
     temp->radius = rad;
     temp->freefalling = freefalling;
+    temp->linked = linked;
     return temp;
 }
 
@@ -49,9 +50,12 @@ void update(Solver *solver, PhysicsObject **objs, const int size, float dt)
         UpdatePositions(solver, objs, size, sub_dt);
         if(solver->link != NULL)
         {
-            for(int i = size-1; i >= 1; i--)
+            for(int i = size-1; (i >= 1); i--)
             {
-                applyLink(solver->link, objs[i-1], objs[i]);
+                if(objs[i]->linked)
+                {
+                    applyLink(solver->link, objs[i-1], objs[i]);
+                }
             }
         }
     }

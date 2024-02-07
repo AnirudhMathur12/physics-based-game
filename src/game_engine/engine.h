@@ -9,6 +9,7 @@ typedef struct PhysicsObject{
     vec2 current_pos, prev_pos, acc;
     float radius;
     int freefalling;
+    int linked;
 } PhysicsObject;
 
 typedef struct Link {
@@ -27,7 +28,7 @@ typedef struct Solver {
 float mod(vec2 *vec);
 
 // Physics Object
-PhysicsObject* createPhysicsObject(int x, int y, float radius, int freefalling);
+PhysicsObject* createPhysicsObject(int x, int y, float radius, int freefalling, int linked);
 void UpdatePostion(PhysicsObject *obj, float dt);
 void accelerate(PhysicsObject *obj, vec2 acc);
 

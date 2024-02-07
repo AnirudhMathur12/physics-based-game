@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define OBJLIMIT 100
+#define OBJLIMIT 300
 
 #define PI 3.14159265359
 
@@ -36,7 +36,7 @@ void INIT();
 void UPDATE();
 
 int running = 1;
-int autospawn = 0;
+int autospawn = 1;
 
 int count = 1;
 
@@ -60,21 +60,21 @@ PhysicsObject* objs[OBJLIMIT];
 int main()
 {
     INIT();
-    // objs[0] = createPhysicsObject(850, 300);
-    // objs[1] = createPhysicsObject(400, 300);
-    // objs[2] = createPhysicsObject(650, 300);
+    count = 21;
     solver = malloc(sizeof(Solver));
     solver->gravity = (vec2){0.0f, 3000.0f};
 
-    /*
     link = malloc(sizeof(Link));
     link->dist = 21;
-    */
-    link = NULL;
 
     solver->link = link;
 
-    objs[0] = createPhysicsObject(800, 400, 20, 1);
+    objs[0] = createPhysicsObject(450, 500, 10, 0, 1);
+    for(int i = 1; i < 20; i++)
+    {
+        objs[i] = createPhysicsObject(450+i*20, 500, 10, 1, 1);
+    }
+    objs[20] = createPhysicsObject(450+20*20, 500, 10, 0, 1);
 
     // win= createWindow("Physics Engine Demo", 1280, 720, 1280, 1280);
     win = SDL_CreateWindow("Window", 20, 20, 1280, 720, SDL_WINDOW_RESIZABLE);
@@ -148,7 +148,9 @@ void UPDATE()
     filledCircleRGBA(rend, 640, 360, 300, 0, 0, 0, 255);
     renderObjects(rend, objs, count);
     SDL_RenderPresent(rend);
-    update(solver, objs, count, 1 / 60.0f);
+        update(solver, objs, count, 1 / 60.0f);
+    objs[0]->current_pos = (vec2){450, 500};
+    objs[20]->current_pos = (vec2){450+20*20, 500};
     /*  
     objs[0]->current_pos.x = 550;
     objs[0]->current_pos.y = 300;
@@ -164,14 +166,27 @@ void renderObjects(SDL_Renderer *rend, PhysicsObject **objs, int size)
     }
 }
 
+float angle = PI/4;
+float add = 0.2;
+
 void spawnball(PhysicsObject **objs, int *count)
 {
     if (*count >= OBJLIMIT)
     {
         return;
     }
-    objs[*count] = createPhysicsObject(700, 300, 10, 1);
-    //accelerate(objs[*count], (vec2){500000*cos(*count), 500000*sin(*count)});
+    objs[*count] = createPhysicsObject(600, 300, 10, 1, 0);
+
+    accelerate(objs[*count], (vec2){500000*cos(angle), 500000*sin(angle)});
+    angle+=add;
+    if(angle >= (3.0f/4.0f)*PI)
+    {
+        add = -0.2f;
+    }
+    else if(angle <= PI/4)
+    {
+        add = 0.2f;
+    }
     (*count)++;
 }
 

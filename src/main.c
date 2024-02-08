@@ -1,4 +1,3 @@
-#include "SDL_hints.h"
 #ifdef __APPLE__
 #include "SDL_events.h"
 #include "SDL_keycode.h"

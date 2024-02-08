@@ -19,7 +19,7 @@
 #include "SDL2/SDL_render.h"
 #include "SDL2/SDL_timer.h"
 #include "SDL2/SDL_video.h"
-#include "SDL2/game_engine/engine.h"
+#include "game_engine/engine.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
 #include <SDL2/SDL_image.h>

@@ -109,7 +109,7 @@ int main()
         }
         UPDATE();
         
-        if(SDL_GetTicks() - spawnticks>25 && autospawn)
+        if(SDL_GetTicks() - spawnticks>100 && autospawn)
         {
             spawnball(objs, &count);
             spawnticks = SDL_GetTicks();
